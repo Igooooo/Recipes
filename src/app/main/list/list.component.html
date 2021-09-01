@@ -1,0 +1,56 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 border border-success">
+            <div class="container">
+                <p class="data-header h2">Przepisy: {{recipes?.length }}</p>
+                <div class="row form-group">
+                    <span class="icon bi bi-person-plus-fill" [routerLink]="['/create']"> Dodaj</span>
+                    <span class="icon bi bi-arrow-repeat" (click)="refresh()"> Odświerz </span>
+                </div>
+                <div class="container justify-content-center">
+                    <p class="data-header bi bi-search"> Szukaj Klienta:</p>
+                    <form [formGroup] = "searchForm"> 
+                        <div class="row form-group">
+                            <div class="col-lg-12">
+                                <input class="form-control" formControlName="name" type="text" placeholder="nazwa przepisu">
+                                <p class = "alert-danger" *ngIf="searchForm.controls['name'].invalid && searchForm.controls['name'].dirty && searchForm.controls['name'].touched">Podaj minimum 3 znaki</p>
+                                <button class="btn btn-primary float-right bi bi-search" (click)="loadRecipesByFilter() "[disabled]="!searchForm.valid"></button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <button class="btn btn-primary float-right bi bi-arrow-repeat" (click)="refresh()"> Wyczyść</button>
+                        </div>
+                    </form>  
+                </div>
+                <div class="row form-group">
+                    <div class="col-sm-12">
+                        <table class="cs-table table table-striped" *ngIf="recipes && recipes.length > 0; else noRecipeInfo">
+                            <thead>
+                                <tr>
+                                    <th>Nazwa</th>
+                                    <th>Usuń</th>
+                                    <th>Edytuj</th>
+                                </tr>
+                            </thead>
+                            <tbody >
+                                <tr class="form-group" *ngFor=" let recipe of recipes let i = index" (click)="goToRecipeDetails(recipe)" >
+                                    <td csImportant> {{ recipe.name }} </td> 
+                                    <td class="icon bi bi-person-dash" (click)="openDialogremoveReciple(recipe, $event)"></td> 
+                                    <td class="icon bi bi-pencil-square" (click)="goToEditRecipe(recipe, $event)"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <ng-template #noRecipeInfo>
+                            <div class="alert alert-danger">
+                                <p>Brak przepisów</p>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div> 
+            </div>
+        </div>
+        <div class="col-lg-6 border border-success">
+            <app-details [recipe] = "recipe"></app-details>
+        </div>
+    </div>
+</div>

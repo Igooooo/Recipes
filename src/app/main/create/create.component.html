@@ -1,0 +1,39 @@
+<div class="container justify-content-center">
+    <p class="data-header h2">Dodaj przepis:</p>
+    <form [formGroup] = "form" > 
+        <div class="row form-group">
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <label>Nazwa</label><br>
+                <input class="form-control" formControlName="name" type="text" placeholder="nazwa">
+                <p class = "alert-danger" *ngIf="form.controls['name'].invalid && form.controls['name'].dirty && form.controls['name'].touched">Uzupełnij pole. Minimum 3 znaki.</p>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <label>Czas</label><br>
+                <input class="form-control" formControlName="preparationTimeInMinutes" type="time"  placeholder="hh:mm:ss">
+                <p class = "alert-danger" *ngIf="form.controls['preparationTimeInMinutes'].invalid && form.controls['preparationTimeInMinutes'].dirty && form.controls['preparationTimeInMinutes'].touched">Uzupełnij pole.</p> 
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <label>Opis</label><br>
+                <input class="form-control" formControlName="description" type="text"  placeholder="opis"> 
+                <p class = "alert-danger" *ngIf="form.controls['description'].invalid && form.controls['description'].dirty && form.controls['description'].touched">Uzupełnij pole. Minimum 15 znaków</p>
+            </div>
+            <div class="col-lg-4" formArrayName="ingredient" *ngFor="let item of getControls(); let i = index">
+                <label>Składnik {{ i + 1}}</label><br>
+                <div [formGroupName]="i">
+                    <input class="form-control" formControlName='name' type="text" placeholder="nazwa"> 
+                    <input class="form-control" formControlName='quantity' type="text" placeholder="ilość">
+                </div>  
+            </div>
+            <div class="col-lg-12">
+                <button class="btn btn-primary float-left" type="button" (click)="addNextIngredient()">Dodaj</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12"><br>
+                <button class="btn btn-primary float-right" type="submit" value="Submit" (click)="submit()"[disabled]="!form.valid">Submit</button>
+                <button class="btn btn-primary float-right" value="Reset" (click)="reset()">Reset From</button>
+            </div>
+        </div>
+    </form>  
+</div>
+

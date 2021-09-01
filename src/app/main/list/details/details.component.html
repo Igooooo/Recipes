@@ -1,0 +1,29 @@
+<div class="container" *ngIf="recipe">
+    <p class="data-header h2">Przepis: {{ recipe?.name }}</p>
+    <div class="row form-group">
+        <div class="col-sm-12">
+            <table class="cs-table table table-striped"> <!-- *ngIF="cars.length > 0; else noCarsInfo | jak nie to pokaż blok noCarsInfo-->
+                <thead>
+                    <tr>
+                        <th>Nazwa</th>
+                        <th>Opis</th>
+                        <th>Czas</th>
+                        <th>Składniki</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="form-group">
+                        <td csImportant> {{ recipe?.name}} </td> 
+                        <td> {{ recipe?.description}} </td> 
+                        <td> {{ recipe?.preparationTimeInMinutes}} </td> 
+                        <td>
+                            <ul *ngFor=" let recipe of recipe?.ingredient let i = index">
+                                {{ recipe.name}}
+                            </ul>
+                        </td>                        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div> 
+</div>
